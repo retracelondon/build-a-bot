@@ -2,31 +2,32 @@
 <div>
   <div class="top-row">
     <div class="top part">
-      <img :src="availableParts.heads[selectedHeadIndex].imageUrl" alt="head" />
+      <div class="robot-name">{{ selectedRobot.head.title }}</div>
+      <img :src="selectedRobot.head.imageUrl" alt="head" />
       <button @click="selectPreviousHead()" class="prev-selector">&#9668;</button>
       <button @click="selectNextHead()" class="next-selector">&#9658;</button>
     </div>
   </div>
   <div class="middle-row">
     <div class="left part">
-      <img :src="availableParts.arms[selectedLeftArmIndex].imageUrl" alt="left arm" />
+      <img :src="selectedRobot.leftArm.imageUrl" alt="left arm" />
       <button @click="selectPreviousLeftArm()" class="prev-selector">&#9650;</button>
       <button @click="selectNextLeftArm()" class="next-selector">&#9660;</button>
     </div>
     <div class="center part">
-      <img v-bind:src="availableParts.torsos[selectedTorsoIndex].imageUrl" alt="torso" />
+      <img v-bind:src="selectedRobot.torso.imageUrl" alt="torso" />
       <button v-on:click="selectPreviousTorso()" class="prev-selector">&#9668;</button>
       <button v-on:click="selectNextTorso()" class="next-selector">&#9658;</button>
     </div>
     <div class="right part">
-      <img v-bind:src="availableParts.arms[selectedRightArmIndex].imageUrl" alt="right arm" />
+      <img v-bind:src="selectedRobot.rightArm.imageUrl" alt="right arm" />
       <button v-on:click="selectPreviousRightArm()" class="prev-selector">&#9650;</button>
       <button v-on:click="selectNextRightArm()" class="next-selector">&#9660;</button>
     </div>
   </div>
   <div class="bottom-row">
     <div class="bottom part">
-      <img v-bind:src="availableParts.bases[selectedBaseIndex].imageUrl" alt="base" />
+      <img v-bind:src="selectedRobot.base.imageUrl" alt="base" />
       <button v-on:click="selectPreviousBase()" class="prev-selector">&#9668;</button>
       <button v-on:click="selectNextBase()" class="next-selector">&#9658;</button>
     </div>
@@ -242,5 +243,12 @@ export default {
 
 .right .next-selector {
   right: -3px;
+}
+
+.robot-name{
+  position: absolute;
+  top:-25px;
+  text-align: center;
+  width: 100%;
 }
 </style>
