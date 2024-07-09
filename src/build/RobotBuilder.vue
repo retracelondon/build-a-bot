@@ -196,7 +196,8 @@ const selectPreviousBase = () => {
 // };
 </script>
 
-<style scoped>
+// sass installed with npm install sass-loader sass -save-dev
+<style lang="scss" scoped>
 .part {
   position: relative;
   width: 200px;
@@ -212,9 +213,9 @@ top.part {
   border: 3px solid red;
 } */
 
-.part img {
+.part {img {
   width: 200px;
-}
+}}
 
 .top-row {
   display: flex;
