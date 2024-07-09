@@ -4,7 +4,8 @@
   <div class="top-row">
     <!-- <div class="top part" :style="headBorderStyle"> -->
       <!-- <div class="top part" :class="[saleBorderClass]"> -->
-        <div :class="[saleBorderClass, 'top', 'part']">
+        <!-- <div :class="[saleBorderClass, 'top', 'part']"> -->
+          <div class="top part">
       <div class="robot-name">
         {{ selectedRobot.head.title }}
         <span v-show="selectedRobot.head.onSale" class="sale">Sale!</span>
@@ -91,7 +92,9 @@ const selectedRobot = computed(() => ({
   base: availableParts.bases[selectedBaseIndex.value],
 }));
 
-const saleBorderClass = computed(() => (selectedRobot.value.head.onSale ? 'sale-border' : '3px sold red'));
+// const saleBorderClass =
+// computed(() => (selectedRobot.value.head.onSale ? 'sale-border' : '3px sold red'));
+const headBorderColour = computed(() => (selectedRobot.value.head.onSale ? 'red' : '#aaa'));
 
 // const headBorderStyle = computed(() => ({ border: selectedRobot.value.head.onSale ?
 // '3px solid red' : '3px solid #aaa' }));
@@ -201,9 +204,13 @@ const selectPreviousBase = () => {
   border: 3px solid #aaa;
 }
 
-.sale-border {
-  border: 3px solid red;
+top.part {
+  border: 3px solid v-bind(headBorderColour);
 }
+
+/* .sale-border {
+  border: 3px solid red;
+} */
 
 .part img {
   width: 200px;
