@@ -5,39 +5,29 @@
     <!-- <div class="top part" :style="headBorderStyle"> -->
       <!-- <div class="top part" :class="[saleBorderClass]"> -->
         <!-- <div :class="[saleBorderClass, 'top', 'part']"> -->
-          <div class="top part">
+          <!-- <div class="top part"> -->
       <div class="robot-name">
         {{ selectedRobot.head.title }}
         <span v-show="selectedRobot.head.onSale" class="sale">Sale!</span>
-      </div>
-      <img :src="selectedRobot.head.imageUrl" alt="head" />
+      <!-- </div> -->
+      <!-- <img :src="selectedRobot.head.imageUrl" alt="head" />
       <button @click="selectPreviousHead()" class="prev-selector">&#9668;</button>
-      <button @click="selectNextHead()" class="next-selector">&#9658;</button>
+      <button @click="selectNextHead()" class="next-selector">&#9658;</button> -->
+      <PartSelector/>
     </div>
   </div>
   <div class="middle-row">
-    <div class="left part">
-      <img :src="selectedRobot.leftArm.imageUrl" alt="left arm" />
-      <button @click="selectPreviousLeftArm()" class="prev-selector">&#9650;</button>
-      <button @click="selectNextLeftArm()" class="next-selector">&#9660;</button>
-    </div>
-    <div class="center part">
-      <img v-bind:src="selectedRobot.torso.imageUrl" alt="torso" />
-      <button v-on:click="selectPreviousTorso()" class="prev-selector">&#9668;</button>
-      <button v-on:click="selectNextTorso()" class="next-selector">&#9658;</button>
-    </div>
-    <div class="right part">
-      <img v-bind:src="selectedRobot.rightArm.imageUrl" alt="right arm" />
-      <button v-on:click="selectPreviousRightArm()" class="prev-selector">&#9650;</button>
-      <button v-on:click="selectNextRightArm()" class="next-selector">&#9660;</button>
-    </div>
+    <PartSelector/>
+    <PartSelector/>
+    <PartSelector/>
   </div>
   <div class="bottom-row">
-    <div class="bottom part">
+    <!-- <div class="bottom part">
       <img v-bind:src="selectedRobot.base.imageUrl" alt="base" />
       <button v-on:click="selectPreviousBase()" class="prev-selector">&#9668;</button>
       <button v-on:click="selectNextBase()" class="next-selector">&#9658;</button>
-    </div>
+    </div> -->
+    <PartSelector/>
   </div>
 </div>
 <div>
@@ -62,35 +52,43 @@
 <script setup>
 import { computed, ref, onMounted } from 'vue';
 import { toCurrency } from '@/shared/formatters';
-import parts from '../data/parts';
+import PartSelector from './PartSelector.vue';
+// import parts from '../data/parts';
 
-function getNextValidIndex(index, length) {
-  const incrementedIndex = index + 1;
-  return incrementedIndex > length - 1 ? 0 : incrementedIndex;
-}
+// function getNextValidIndex(index, length) {
+//   const incrementedIndex = index + 1;
+//   return incrementedIndex > length - 1 ? 0 : incrementedIndex;
+// }
 
-function getPreviousValidIndex(index, length) {
-  const deprecatedIndex = index - 1;
-  return deprecatedIndex < 0 ? length - 1 : deprecatedIndex;
-}
+// function getPreviousValidIndex(index, length) {
+//   const deprecatedIndex = index - 1;
+//   return deprecatedIndex < 0 ? length - 1 : deprecatedIndex;
+// }
 
-const availableParts = parts;
-const selectedHeadIndex = ref(0);
-const selectedLeftArmIndex = ref(0);
-const selectedTorsoIndex = ref(0);
-const selectedRightArmIndex = ref(0);
-const selectedBaseIndex = ref(0);
+// const availableParts = parts;
+// const selectedHeadIndex = ref(0);
+// const selectedLeftArmIndex = ref(0);
+// const selectedTorsoIndex = ref(0);
+// const selectedRightArmIndex = ref(0);
+// const selectedBaseIndex = ref(0);
 const cart = ref([]);
 
 onMounted(() => console.log('onMounted executed'));
 
-const selectedRobot = computed(() => ({
-  head: availableParts.heads[selectedHeadIndex.value],
-  leftArm: availableParts.arms[selectedLeftArmIndex.value],
-  torso: availableParts.torsos[selectedTorsoIndex.value],
-  rightArm: availableParts.arms[selectedRightArmIndex.value],
-  base: availableParts.bases[selectedBaseIndex.value],
-}));
+const selectedRobot = ref({
+// const selectedRobot = computed(() => ({
+  // head: availableParts.heads[selectedHeadIndex.value],
+  // leftArm: availableParts.arms[selectedLeftArmIndex.value],
+  // torso: availableParts.torsos[selectedTorsoIndex.value],
+  // rightArm: availableParts.arms[selectedRightArmIndex.value],
+  // base: availableParts.bases[selectedBaseIndex.value],
+  head: {},
+  leftArm: {},
+  torso: {},
+  rightArm: {},
+  base: {},
+// }));
+});
 
 // const saleBorderClass =
 // computed(() => (selectedRobot.value.head.onSale ? 'sale-border' : '3px sold red'));
@@ -110,66 +108,66 @@ const addToCart = () => {
   console.log(cart.value.length);
 };
 // #region Part Selector Methods
-const selectNextHead = () => {
-  selectedHeadIndex.value = getNextValidIndex(
-    selectedHeadIndex.value,
-    availableParts.heads.length,
-  );
-};
-const selectPreviousHead = () => {
-  selectedHeadIndex.value = getPreviousValidIndex(
-    selectedHeadIndex.value,
-    availableParts.heads.length,
-  );
-};
-const selectNextLeftArm = () => {
-  selectedLeftArmIndex.value = getNextValidIndex(
-    selectedLeftArmIndex.value,
-    availableParts.arms.length,
-  );
-};
-const selectPreviousLeftArm = () => {
-  selectedLeftArmIndex.value = getPreviousValidIndex(
-    selectedLeftArmIndex.value,
-    availableParts.heads.length,
-  );
-};
-const selectNextTorso = () => {
-  selectedTorsoIndex.value = getNextValidIndex(
-    selectedTorsoIndex.value,
-    availableParts.torsos.length,
-  );
-};
-const selectPreviousTorso = () => {
-  selectedTorsoIndex.value = getPreviousValidIndex(
-    selectedTorsoIndex.value,
-    availableParts.torsos.length,
-  );
-};
-const selectNextRightArm = () => {
-  selectedRightArmIndex.value = getNextValidIndex(
-    selectedRightArmIndex.value,
-    availableParts.arms.length,
-  );
-};
-const selectPreviousRightArm = () => {
-  selectedRightArmIndex.value = getPreviousValidIndex(
-    selectedRightArmIndex.value,
-    availableParts.arms.length,
-  );
-};
-const selectNextBase = () => {
-  selectedBaseIndex.value = getNextValidIndex(
-    selectedBaseIndex.value,
-    availableParts.bases.length,
-  );
-};
-const selectPreviousBase = () => {
-  selectedBaseIndex.value = getPreviousValidIndex(
-    selectedBaseIndex.value,
-    availableParts.bases.length,
-  );
-};
+// const selectNextHead = () => {
+//   selectedHeadIndex.value = getNextValidIndex(
+//     selectedHeadIndex.value,
+//     availableParts.heads.length,
+//   );
+// };
+// const selectPreviousHead = () => {
+//   selectedHeadIndex.value = getPreviousValidIndex(
+//     selectedHeadIndex.value,
+//     availableParts.heads.length,
+//   );
+// };
+// const selectNextLeftArm = () => {
+//   selectedLeftArmIndex.value = getNextValidIndex(
+//     selectedLeftArmIndex.value,
+//     availableParts.arms.length,
+//   );
+// };
+// const selectPreviousLeftArm = () => {
+//   selectedLeftArmIndex.value = getPreviousValidIndex(
+//     selectedLeftArmIndex.value,
+//     availableParts.heads.length,
+//   );
+// };
+// const selectNextTorso = () => {
+//   selectedTorsoIndex.value = getNextValidIndex(
+//     selectedTorsoIndex.value,
+//     availableParts.torsos.length,
+//   );
+// };
+// const selectPreviousTorso = () => {
+//   selectedTorsoIndex.value = getPreviousValidIndex(
+//     selectedTorsoIndex.value,
+//     availableParts.torsos.length,
+//   );
+// };
+// const selectNextRightArm = () => {
+//   selectedRightArmIndex.value = getNextValidIndex(
+//     selectedRightArmIndex.value,
+//     availableParts.arms.length,
+//   );
+// };
+// const selectPreviousRightArm = () => {
+//   selectedRightArmIndex.value = getPreviousValidIndex(
+//     selectedRightArmIndex.value,
+//     availableParts.arms.length,
+//   );
+// };
+// const selectNextBase = () => {
+//   selectedBaseIndex.value = getNextValidIndex(
+//     selectedBaseIndex.value,
+//     availableParts.bases.length,
+//   );
+// };
+// const selectPreviousBase = () => {
+//   selectedBaseIndex.value = getPreviousValidIndex(
+//     selectedBaseIndex.value,
+//     availableParts.bases.length,
+//   );
+// };
 // #endregion
 
 // return {
