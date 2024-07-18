@@ -13,13 +13,13 @@
       <!-- <img :src="selectedRobot.head.imageUrl" alt="head" />
       <button @click="selectPreviousHead()" class="prev-selector">&#9668;</button>
       <button @click="selectNextHead()" class="next-selector">&#9658;</button> -->
-      <PartSelector/>
     </div>
+    <PartSelector :parts="availableParts.heads" position="top" />
   </div>
   <div class="middle-row">
-    <PartSelector/>
-    <PartSelector/>
-    <PartSelector/>
+    <PartSelector :parts="availableParts.arms" position="left" />
+    <PartSelector :parts="availableParts.torsos" position="center" />
+    <PartSelector :parts="availableParts.arms" position="right" />
   </div>
   <div class="bottom-row">
     <!-- <div class="bottom part">
@@ -27,7 +27,7 @@
       <button v-on:click="selectPreviousBase()" class="prev-selector">&#9668;</button>
       <button v-on:click="selectNextBase()" class="next-selector">&#9658;</button>
     </div> -->
-    <PartSelector/>
+    <PartSelector :parts="availableParts.bases" position="bottom" />
   </div>
 </div>
 <div>
@@ -53,7 +53,7 @@
 import { computed, ref, onMounted } from 'vue';
 import { toCurrency } from '@/shared/formatters';
 import PartSelector from './PartSelector.vue';
-// import parts from '../data/parts';
+import parts from '../data/parts';
 
 // function getNextValidIndex(index, length) {
 //   const incrementedIndex = index + 1;
@@ -65,7 +65,7 @@ import PartSelector from './PartSelector.vue';
 //   return deprecatedIndex < 0 ? length - 1 : deprecatedIndex;
 // }
 
-// const availableParts = parts;
+const availableParts = parts;
 // const selectedHeadIndex = ref(0);
 // const selectedLeftArmIndex = ref(0);
 // const selectedTorsoIndex = ref(0);
