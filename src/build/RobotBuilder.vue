@@ -1,6 +1,21 @@
 <template>
 <div class="content">
-  <button class="add-to-cart" @click="addToCart()">Add to Cart</button>
+  <div class="preview">
+  <div class="preview-content">
+    <div class="top-row">
+      <img :src="selectedRobot.head.imageUrl" alt=""/>
+    </div>
+    <div class="middle-row">
+      <img :src="selectedRobot.leftArm.imageUrl" class="rotate-left" alt="" />
+      <img :src="selectedRobot.torso.imageUrl" alt="" />
+      <img :src="selectedRobot.rightArm.imageUrl" class="rotate-right" alt="" />
+    </div>
+    <div class="bottom-row">
+      <img :src="selectedRobot.base.imageUrl" alt="" />
+    </div>
+    <button class="add-to-cart" @click="addToCart()">Add to Cart</button>
+  </div>
+</div>
   <div class="top-row">
     <!-- <div class="top part" :style="headBorderStyle"> -->
       <!-- <div class="top part" :class="[saleBorderClass]"> -->
@@ -14,12 +29,20 @@
       <button @click="selectPreviousHead()" class="prev-selector">&#9668;</button>
       <button @click="selectNextHead()" class="next-selector">&#9658;</button> -->
     </div>
-    <PartSelector :parts="availableParts.heads" position="top" />
+    <PartSelector :parts="availableParts.heads"
+    position="top"
+    @partSelected="part => selectedRobot.head = part"/>
   </div>
   <div class="middle-row">
-    <PartSelector :parts="availableParts.arms" position="left" />
-    <PartSelector :parts="availableParts.torsos" position="center" />
-    <PartSelector :parts="availableParts.arms" position="right" />
+    <PartSelector :parts="availableParts.arms"
+    position="left"
+    @partSelected="part => selectedRobot.leftArm = part"/>
+    <PartSelector :parts="availableParts.torsos"
+    position="center"
+    @partSelected="part => selectedRobot.torso = part"/>
+    <PartSelector :parts="availableParts.arms"
+    position="right"
+    @partSelected="part => selectedRobot.rightArm = part"/>
   </div>
   <div class="bottom-row">
     <!-- <div class="bottom part">
@@ -27,7 +50,9 @@
       <button v-on:click="selectPreviousBase()" class="prev-selector">&#9668;</button>
       <button v-on:click="selectNextBase()" class="next-selector">&#9658;</button>
     </div> -->
-    <PartSelector :parts="availableParts.bases" position="bottom" />
+    <PartSelector :parts="availableParts.bases"
+    position="bottom"
+    @partSelected="part => selectedRobot.base = part"/>
   </div>
 </div>
 <div>
@@ -327,10 +352,37 @@ top.part {
   position: relative;
 }
 
+.preview {
+  position: absolute;
+  top: -20px;
+  right: 0;
+  width: 310px;
+  height: 310px;
+  padding: 5px;
+}
+
+.preview-content {
+  border: 1px solid #999;
+}
+
+.preview img {
+  width: 70px;
+  height: 70px;
+}
+
+.rotate-right {
+  transform: rotate(90deg);
+}
+
+.rotate-left {
+  transform: rotate(-90deg);
+}
+
 .add-to-cart{
   position: absolute;
-  right:30px;
-  width:220px;
+  // right:30px;
+  // width:220px;
+  width:310px;
   padding: 3px;
   font-size: 16px;
 }
