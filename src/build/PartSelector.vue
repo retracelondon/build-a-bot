@@ -8,7 +8,7 @@
   </template>
 
 <script setup>
-import { computed, ref } from 'vue';
+import { computed, ref, onUpdated } from 'vue';
 // import availableParts from '../data/parts';
 
 // const props = defineProps(['parts', 'position']);
@@ -26,6 +26,7 @@ const emit = defineEmits(['partSelected']);
 // const parts = availableParts.heads;
 const selectedPartIndex = ref(0);
 const selectedPart = computed(() => props.parts[selectedPartIndex.value]);
+onUpdated(() => emit('partSelected', selectedPart));
 
 emit('partSelected', selectedPart);
 
@@ -44,7 +45,7 @@ const selectNextPart = () => {
     selectedPartIndex.value,
     props.parts.length,
   );
-  emit('partSelected', selectedPart);
+  // emit('partSelected', selectedPart);
   console.log(selectedPart.value);
 };
 
@@ -53,7 +54,7 @@ const selectPreviousPart = () => {
     selectedPartIndex.value,
     props.parts.length,
   );
-  emit('partSelected', selectedPart);
+  // emit('partSelected', selectedPart);
 };
 </script>
 
